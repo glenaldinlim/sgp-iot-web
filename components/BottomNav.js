@@ -10,7 +10,7 @@ const BottomNav = () => {
               <i className="bi bi-house text-3xl"></i>
               <span className="text-sm">Home</span>
             </a>
-        </Link>
+          </Link>
         </li>
         <li className="w-full text-center hover:text-green-400">
           <Link href="/control">
@@ -18,7 +18,15 @@ const BottomNav = () => {
               <i className="bi bi-gear text-3xl"></i>
               <span className="text-sm">Control</span>
             </a>
-        </Link>
+          </Link>
+        </li>
+        <li className="w-full text-center hover:text-green-400">
+          <Link href="/record">
+            <a className="flex flex-col p-2">
+              <i className="bi bi-clipboard text-3xl"></i>
+              <span className="text-sm">Record</span>
+            </a>
+          </Link>
         </li>
       </ul>
 		</nav>
