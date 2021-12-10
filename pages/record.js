@@ -1,12 +1,23 @@
 import Head from 'next/head';
 import { useEffect, useState } from 'react'
 
-import BottomNav from '../components/bottomNav';
+import BottomNav from '../components/BottomNav';
 import Modal from "../components/Modal";
 
 const Record = () => {
   const [open, setOpen] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [dump, setDump] = useState([])
+
+  useEffect(() => {
+    const dumpRef = ref(db, '/v1/dump')
+    const unsubscribe = onValue(dumpRef, (snapshot) => {
+      setDump(snapshot.val())
+      setLoading(false)
+    })
+
+    return unsubscribe
+  }, [])
 
   const onChangeOpen = () => {
     setOpen(!open)
@@ -25,7 +36,7 @@ const Record = () => {
         <div className="px-4">
           <div className="flex justify-center px-2 mb-5">
             {
-              dump == undefined ? 
+              loading == undefined ? 
                 <h1>Loading...</h1>
               :
                 <table className="border-collapse border border-gray-400 table-auto">
