@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react'
 import { ref, onValue } from "firebase/database";
 
-import BottomNav from "../components/bottomNav";
+import BottomNav from "../components/BottomNav";
 import Card from "../components/Card";
 
 import { db } from '../firebase';
