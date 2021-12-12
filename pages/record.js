@@ -1,23 +1,30 @@
 import Head from 'next/head';
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
+import { ref, onValue } from "firebase/database";
 
 import BottomNav from '../components/BottomNav';
 import Modal from "../components/Modal";
+import { db } from '../firebase';
 
 const Record = () => {
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(true)
-  const [dump, setDump] = useState([])
+  const [records, setRecords] = useState()
 
   useEffect(() => {
-    const dumpRef = ref(db, '/v1/dump')
-    const unsubscribe = onValue(dumpRef, (snapshot) => {
-      setDump(snapshot.val())
+    const recordsRef = ref(db, '/v1/dump')
+    const unsubscribe = onValue(recordsRef, (snapshot) => {
+      setRecords(snapshot.val())
       setLoading(false)
     })
 
     return unsubscribe
   }, [])
+
+  const handleButtonClick = (data) => {
+    setOpen(true)
+    console.log(data)
+  }
 
   const onChangeOpen = () => {
     setOpen(!open)
@@ -33,36 +40,44 @@ const Record = () => {
         Riwayat
       </div>
       <main className="mb-auto">
-        <div className="px-4">
-          <div className="flex justify-center px-2 mb-5">
-            {
-              loading == undefined ? 
-                <h1>Loading...</h1>
-              :
-                <table className="border-collapse border border-gray-400 table-auto">
-                  <thead>
-                    <tr className="bg-gray-200">
+        <div className="flex sm:justify-center px-2 mb-5 overflow-x-auto">
+          {
+            loading ?
+              <h1>Loading...</h1>
+            :
+              <>
+                <table className="min-w-full border border-gray-200 shadow text-left table-auto">
+                  <thead className="border-b bg-gray-50 text-gray-500">
+                    <tr className="whitespace-nowrap">
                       <th className="py-1 px-2">Tanggal</th>
                       <th className="py-1 px-2">Temperature</th>
+                      <th className="py-1 px-2">Humidity</th>
+                      <th className="py-1 px-2">Water Height</th>
                       <th className="py-1 px-2">Aksi</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr className="border border-gray-400">
-                      <td className="p-1">04/12/2021 18:50</td>
-                      <td className="p-1">30.1 C</td>
-                      <td className="p-1">
-                        <button className="bg-green-400 hover:bg-green-500 px-3 rounded-md" onClick={() => setOpen(true)}>
-                          <i className="bi bi-eye-fill text-white hover:text-gray-100"></i>
-                        </button>
-                      </td>
-                      { open ? <Modal open={onChangeOpen} /> : null }
-                    </tr>
+                  <tbody className="bg-white divide-y divide-gray-300">
+                    {
+                      Object.keys(records).map((key) => (
+                        <tr className="whitespace-nowrap" key={key}>
+                          <td className="py-1 px-2">{records[key].timestamp}</td>
+                          <td className="py-1 px-2">{records[key].temperature} C</td>
+                          <td className="py-1 px-2">{records[key].humidity} %</td>
+                          <td className="py-1 px-2">{records[key].waterHeight} cm</td>
+                          <td className="py-1 px-2">
+                              <button className="px-2" onClick={() => handleButtonClick(records[key])}>
+                                  <i className="bi bi-eye-fill text-lg text-blue-400 hover:text-blue-500"></i>
+                              </button>
+                          </td>
+                      </tr>
+                      ))
+                    }
                   </tbody>
                 </table>
-            }
-          </div>
-        </div>
+                { open ? <Modal open={onChangeOpen} /> : null }
+              </>
+          }
+      </div>
       </main>
       <BottomNav />
     </div>
