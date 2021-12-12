@@ -1,4 +1,4 @@
-const Modal = ({open}) => {
+const Modal = ({open, data}) => {
   const handleClick = () => {
     open()
   }
@@ -20,27 +20,27 @@ const Modal = ({open}) => {
                     <tbody>
                       <tr className="text-sm text-gray-500">
                         <td className="font-bold">Waktu Penyiraman</td>
-                        <td>: 05 Desember 2021 07:00</td>
+                        <td>: {data.timestamp}</td>
                       </tr>
                       <tr className="text-sm text-gray-500">
                         <td className="font-bold">Temperature</td>
-                        <td>: 30.0 C</td>
+                        <td>: {data.temperature} C</td>
                       </tr>
                       <tr className="text-sm text-gray-500">
                         <td className="font-bold">Humidity</td>
-                        <td>: 30.1 %</td>
+                        <td>: {data.humidity} %</td>
                       </tr>
                       <tr className="text-sm text-gray-500">
                         <td className="font-bold">Soil Moisture</td>
-                        <td>: 29.0 %</td>
+                        <td>: {(data.soilMoistureA + data.soilMoistureB) / 2} %</td>
                       </tr>
                       <tr className="text-sm text-gray-500">
                         <td className="font-bold">Ketinggian Penampung</td>
-                        <td>: 5 cm</td>
+                        <td>: {data.waterHeight} cm</td>
                       </tr>
                       <tr className="text-sm text-gray-500">
                         <td className="font-bold">Lama Penyemprotan</td>
-                        <td>: 10 detik</td>
+                        <td>: {data.pompDuration} detik</td>
                       </tr>
                     </tbody>
                   </table>

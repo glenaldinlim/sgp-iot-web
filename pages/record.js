@@ -10,6 +10,7 @@ const Record = () => {
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(true)
   const [records, setRecords] = useState()
+  const [record, setRecord] = useState()
 
   useEffect(() => {
     const recordsRef = ref(db, '/v1/dump')
@@ -20,11 +21,6 @@ const Record = () => {
 
     return unsubscribe
   }, [])
-
-  const handleButtonClick = (data) => {
-    setOpen(true)
-    console.log(data)
-  }
 
   const onChangeOpen = () => {
     setOpen(!open)
@@ -65,7 +61,7 @@ const Record = () => {
                           <td className="py-1 px-2">{records[key].humidity} %</td>
                           <td className="py-1 px-2">{records[key].waterHeight} cm</td>
                           <td className="py-1 px-2">
-                              <button className="px-2" onClick={() => handleButtonClick(records[key])}>
+                              <button className="px-2" onClick={() => { setOpen(true); setRecord(records[key]) }}>
                                   <i className="bi bi-eye-fill text-lg text-blue-400 hover:text-blue-500"></i>
                               </button>
                           </td>
@@ -74,7 +70,7 @@ const Record = () => {
                     }
                   </tbody>
                 </table>
-                { open ? <Modal open={onChangeOpen} /> : null }
+                { open ? <Modal open={onChangeOpen} data={record} /> : null }
               </>
           }
       </div>
