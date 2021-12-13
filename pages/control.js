@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { useEffect, useState } from "react";
-import { ref, onValue } from "firebase/database";
+import { ref, onValue, update } from "firebase/database";
 
 import BottomNav from '../components/BottomNav';
 import { db } from '../firebase';
@@ -19,8 +19,11 @@ const Control = () => {
     return unsubscribe
   }, [])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    const configureRef = ref(db, '/v1/config')
+    
+    return update(configureRef, configure)
   }
 
   return (
@@ -41,22 +44,54 @@ const Control = () => {
               <form className="flex flex-col" onSubmit={handleSubmit}>
                 <div className="flex flex-col mb-5">
                   <label className="font-semibold mb-2 text-gray-700">Durasi Pompa (Detik) </label>
-                  <input type="text" name="duration" id="duration" placeholder="Durasi Pompa" value={configure.pompDuration} className="shadow border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-400 h-10 px-3 py-1" />
+                  <input 
+                    type="text"
+                    name="pompDuration"
+                    id="duration"
+                    placeholder="Durasi Pompa"
+                    value={configure.pompDuration}
+                    onChange={(e) => setConfigure({...configure, pompDuration: e.target.value})}
+                    className="shadow border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-400 h-10 px-3 py-1"
+                  />
                 </div>
                 <div className="flex flex-col mb-5">
                   <label className="font-semibold mb-2 text-gray-700">Waktu Penyiraman</label>
                   <div className="table w-full">
                     <div className="table-row">
                       <label className="text-gray-700 table-cell">Pagi</label>
-                      <input type="time" name="times[]" id="time_morn" placeholder="Pagi" value={configure.timeSettings[0]} className="mb-2 table-cell shadow border border-gray-300 bg-white rounded-md focus:outline-none focus:ring-1 focus:ring-green-400 h-10 px-3 py-1" />
+                      <input
+                        type="time"
+                        name="time_morn"
+                        id="time_morn"
+                        placeholder="Pagi"
+                        value={configure.timeSettings[0]}
+                        onChange={(e) => setConfigure({...configure, timeSettings: [e.target.value, configure.timeSettings[1], configure.timeSettings[2]]})}
+                        className="mb-2 table-cell shadow border border-gray-300 bg-white rounded-md focus:outline-none focus:ring-1 focus:ring-green-400 h-10 px-3 py-1" 
+                      />
                     </div>
                     <div className="table-row">
                       <label className="text-gray-700 table-cell">Siang</label>
-                      <input type="time" name="times[]" id="time_noon" placeholder="Pagi" value={configure.timeSettings[1]} className="mb-2 table-cell shadow border border-gray-300 bg-white rounded-md focus:outline-none focus:ring-1 focus:ring-green-400 h-10 px-3 py-1" />
+                      <input
+                        type="time"
+                        name="time_noon"
+                        id="time_noon"
+                        placeholder="Pagi"
+                        value={configure.timeSettings[1]}
+                        onChange={(e) => setConfigure({...configure, timeSettings: [configure.timeSettings[0], e.target.value, configure.timeSettings[2]]})}
+                        className="mb-2 table-cell shadow border border-gray-300 bg-white rounded-md focus:outline-none focus:ring-1 focus:ring-green-400 h-10 px-3 py-1" 
+                      />
                     </div>
                     <div className="table-row">
                       <label className="text-gray-700 table-cell">Sore</label>
-                      <input type="time" name="times[]" id="time_evening" placeholder="Pagi" value={configure.timeSettings[2]} className="mb-2 table-cell shadow border border-gray-300 bg-white rounded-md focus:outline-none focus:ring-1 focus:ring-green-400 h-10 px-3 py-1" />
+                      <input
+                        type="time"
+                        name="time_evening"
+                        id="time_evening"
+                        placeholder="Pagi"
+                        value={configure.timeSettings[2]}
+                        onChange={(e) => setConfigure({...configure, timeSettings: [configure.timeSettings[0], configure.timeSettings[1], e.target.value]})}
+                        className="mb-2 table-cell shadow border border-gray-300 bg-white rounded-md focus:outline-none focus:ring-1 focus:ring-green-400 h-10 px-3 py-1" 
+                      />
                     </div>
                   </div>
                 </div>
