@@ -1,34 +1,29 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## About SGP ( Smart Greenhouse Pesticide)
+SGP a.k.a Smart Greenhouse Pesticide is a IoT project about Controlling and Monitoring Greenhouse. In this project, user can controlling the watering time also the pomp duration; user can monitoring humidity and temperature of greenhouse, soil moisture, and height of pesticide. This is a Final Project of TEK304 - Sistem Tertanam (Embedded System).
 
-## Getting Started
+### Team
+- J3D119016 - Arief Kurnia Ananda
+- J3D119039 - Dwi Yulinar
+- J3D119021 - Bagus Raspati
+- J3D119052 - Glenaldin Halim
+- J3D119072 - Meihair Alfianzen
+- J3D119101 - Nur Tri Wahyudiningsih
+- J3D119110 - Ramadhan Kukuh Prakoso
+- J3D119119 - Safrizal Abdul Latief
 
-First, run the development server:
+## Tech Stack and Library Used
+| Name            | Version |
+| --------------- | ------- |
+| NextJS          | 12.0.7  |
+| TailWindCSS     | ^2.2.19 |
+| Bootstrap Icons | ^1.7.2  |
+| Firebase SDK    | ^9.6.0  |
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+## Development Environment
+This Project is develop with NodeJS (version 14) as a server environment, Firebase as Database and NextJS as web framework. You can visit the hardware repo's at [SGP IoT - Hardware](https://github.com/glenaldinlim/sgp-iot)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## How to Use
+1. Clone this repo to your local computer via git command or zip download
+2. Run `npm install` on your cmd or terminal
+3. Change `firebaseConfig` at `firebase.js` correspond to Configuration at your Firebase Account
+4. Run `npm run dev` to running local server
